@@ -32,10 +32,12 @@ def get_sagemaker_runtime():
 @st.cache_resource
 def load_shap_artifacts():
     """SHAP explainer and feature names load locally from the repo."""
-    explainer = joblib.load("shap_explainer.pkl")
-    selected_feature_names = joblib.load("selected_feature_names.pkl")
-    feature_names = joblib.load("feature_names.pkl")
-    pipeline = joblib.load("final_pipeline.pkl")  # used only for preprocessing transform
+    import os
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    explainer = joblib.load(os.path.join(base_dir, "shap_explainer.pkl"))
+    selected_feature_names = joblib.load(os.path.join(base_dir, "selected_feature_names.pkl"))
+    feature_names = joblib.load(os.path.join(base_dir, "feature_names.pkl"))
+    pipeline = joblib.load(os.path.join(base_dir, "final_pipeline.pkl"))
     return explainer, selected_feature_names, feature_names, pipeline
 
 
